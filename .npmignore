@@ -1,3 +1,6 @@
 /node_modules
 /docs
 .cache
+rollup.config.js
+/src/parser.terms.js
+/src/parser.js
