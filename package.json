@@ -30,6 +30,6 @@
   },
   "dependencies": {
     "@lezer/highlight": "^1.0.0",
-    "@lezer/lr": "^1.2.2"
+    "@lezer/lr": "^1.0.0"
   }
 }
