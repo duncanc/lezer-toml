@@ -1,3 +1,5 @@
 /node_modules/
 /src/parser.*
 .cache
+/dist/*.cjs
+/dist/*.es.js
