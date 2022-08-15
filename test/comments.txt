@@ -1,0 +1,56 @@
+
+# line comment
+
+# This is a comment.
+
+==>
+
+TopLevelTable(
+  Comment
+)
+
+# comment after table name
+
+[table] # comment
+blah = 1
+
+==>
+
+TopLevelTable(
+  Table(
+    TableHeader(BareKey)
+    Comment
+    Pair(BareKey, DecimalInteger)
+  )
+)
+
+# comment after pair
+
+blah = 1 # comment
+
+==>
+
+TopLevelTable(
+  Pair(BareKey, DecimalInteger)
+  Comment
+)
+
+# comment in array
+
+array = [
+  1,
+  # Comment
+  2,
+  3
+]
+
+==>
+
+TopLevelTable(
+  Pair(BareKey, Array(
+    DecimalInteger
+    Comment
+    DecimalInteger
+    DecimalInteger
+  ))
+)

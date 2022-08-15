@@ -1,0 +1,34 @@
+
+# inline array
+
+array = [1, "string", true]
+
+==>
+
+TopLevelTable(
+  Pair(BareKey, Array(DecimalInteger, ShortBasicString, True))
+)
+
+# multiline array
+
+array = [
+  3,
+  'string',
+  false
+]
+
+==>
+
+TopLevelTable(
+  Pair(BareKey, Array(DecimalInteger, ShortLiteralString, False))
+)
+
+# empty array
+
+empty = []
+
+==>
+
+TopLevelTable(
+  Pair(BareKey, Array())
+)

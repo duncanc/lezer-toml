@@ -1,0 +1,48 @@
+
+# offset datetime
+
+odt1 = 1979-05-27T07:32:00Z
+odt2 = 1979-05-27T00:32:00-07:00
+odt3 = 1979-05-27T00:32:00.999999-07:00
+
+==>
+
+TopLevelTable(
+  Pair(BareKey, OffsetDateTime)
+  Pair(BareKey, OffsetDateTime)
+  Pair(BareKey, OffsetDateTime)
+)
+
+# local datetime
+
+ldt1 = 1979-05-27T07:32:00
+ldt2 = 1979-05-27T00:32:00.999999
+
+==>
+
+TopLevelTable(
+  Pair(BareKey, LocalDateTime)
+  Pair(BareKey, LocalDateTime)
+)
+
+# local date
+
+ld1 = 1979-05-27
+
+==>
+
+TopLevelTable(
+  Pair(BareKey, LocalDate)
+)
+
+# local time
+
+lt1 = 07:32:00
+lt2 = 00:32:00.999999
+
+==>
+
+TopLevelTable(
+  Pair(BareKey, LocalTime)
+  Pair(BareKey, LocalTime)
+)

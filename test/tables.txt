@@ -1,0 +1,101 @@
+
+# tables
+
+[table1]
+t1p1 = 1
+t1p2 = false
+
+[table2]
+t2p1 = 2
+t2p2 = true
+
+==>
+
+TopLevelTable(
+  Table(
+    TableHeader(BareKey),
+    Pair(BareKey, DecimalInteger),
+    Pair(BareKey, False)
+  )
+  Table(
+    TableHeader(BareKey),
+    Pair(BareKey, DecimalInteger),
+    Pair(BareKey, True)
+  )
+)
+
+# compound key tables
+
+[a.b.'c']
+key = "value"
+
+==>
+
+TopLevelTable(
+  Table(
+    TableHeader(CompoundKey(BareKey, BareKey, LiteralStringKey))
+    Pair(BareKey, ShortBasicString)
+  )
+)
+
+# empty tables
+
+[empty1]
+[empty2]
+[empty3]
+
+==>
+
+TopLevelTable(
+  Table(TableHeader(BareKey))
+  Table(TableHeader(BareKey))
+  Table(TableHeader(BareKey))
+)
+
+# inline tables
+
+a = {inline=true, number=1}
+
+==>
+
+TopLevelTable(
+  Pair(BareKey, InlineTable(
+    Pair(BareKey, True)
+    Pair(BareKey, DecimalInteger)
+  ))
+)
+
+# empty inline tables
+
+empty = {}
+
+==>
+
+TopLevelTable(
+  Pair(BareKey, InlineTable())
+)
+
+# array tables
+
+[[array]]
+a = 1
+b = 2
+
+[[array]]
+a = 3
+b = 4
+
+==>
+
+TopLevelTable(
+  ArrayTable(
+    ArrayTableHeader(BareKey)
+    Pair(BareKey, DecimalInteger)
+    Pair(BareKey, DecimalInteger)
+  )
+  ArrayTable(
+    ArrayTableHeader(BareKey)
+    Pair(BareKey, DecimalInteger)
+    Pair(BareKey, DecimalInteger)
+  )
+)

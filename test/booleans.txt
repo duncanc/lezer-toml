@@ -1,0 +1,20 @@
+
+# true
+
+correct = true
+
+==>
+
+TopLevelTable(
+  Pair(BareKey, True)
+)
+
+# false
+
+bogus = false
+
+==>
+
+TopLevelTable(
+  Pair(BareKey, False)
+)

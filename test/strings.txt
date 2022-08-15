@@ -1,0 +1,78 @@
+
+# basic strings
+
+str1 = "I'm a string."
+str2 = "You can \"quote\" me."
+str3 = "Name\tJos\u00E9\nLoc\tSF."
+
+==>
+
+TopLevelTable(
+  Pair(BareKey, ShortBasicString)
+  Pair(BareKey, ShortBasicString)
+  Pair(BareKey, ShortBasicString)
+)
+
+# multiline basic strings
+
+str1 = """
+Roses are red
+Violets are blue"""
+
+str2 = """\
+  The quick brown \
+  fox jumps over \
+  the lazy dog.\
+  """
+
+==>
+
+TopLevelTable(
+  Pair(BareKey, LongBasicString)
+  Pair(BareKey, LongBasicString)
+)
+
+# literal strings
+
+path = 'C:\Users\nodejs\templates'
+path2 = '\\User\admin$\system32'
+quoted = 'Tom "Dubs" Preston-Werner'
+regex = '<\i\c*\s*>'
+
+==>
+
+TopLevelTable(
+  Pair(BareKey, ShortLiteralString)
+  Pair(BareKey, ShortLiteralString)
+  Pair(BareKey, ShortLiteralString)
+  Pair(BareKey, ShortLiteralString)
+)
+
+# multiline literal strings
+
+re = '''\d{2} apps is t[wo]o many'''
+lines = '''
+The first newline is
+trimmed in raw strings.
+All other whitespace
+is preserved.
+'''
+
+==>
+
+TopLevelTable(
+  Pair(BareKey, LongLiteralString)
+  Pair(BareKey, LongLiteralString)
+)
+
+# one or two quotes inside the end of a long string
+
+str1 = """"This," she said, "is just a pointless statement.""""
+str2 = ''''That,' she said, 'is still pointless.''''
+
+==>
+
+TopLevelTable(
+  Pair(BareKey, LongBasicString)
+  Pair(BareKey, LongLiteralString)
+)

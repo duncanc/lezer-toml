@@ -1,0 +1,36 @@
+
+# bare keys
+
+bk = 1
+1 = 2
+-_- = 3
+
+==>
+
+TopLevelTable(
+  Pair(BareKey, DecimalInteger)
+  Pair(BareKey, DecimalInteger)
+  Pair(BareKey, DecimalInteger)
+)
+
+# quoted keys
+
+"double quoted key" = 1
+'single quoted key\' = 2
+
+==>
+
+TopLevelTable(
+  Pair(BasicStringKey, DecimalInteger)
+  Pair(LiteralStringKey, DecimalInteger)
+)
+
+# compound keys
+
+one."two" .'three'. four = 1234
+
+==>
+
+TopLevelTable(
+  Pair(CompoundKey(BareKey, BasicStringKey, LiteralStringKey, BareKey), DecimalInteger)
+)

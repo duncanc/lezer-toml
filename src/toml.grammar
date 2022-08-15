@@ -1,0 +1,141 @@
+
+@top TopLevelTable {
+  eol*
+  line<Pair>*
+  (Table | ArrayTable)*
+  eof
+}
+
+line<T> {
+  T (eol+ | eof)
+}
+
+Pair {
+  key '=' value
+}
+
+key {
+  singleKey
+  | CompoundKey { singleKey ('.' singleKey)+ }
+}
+
+singleKey {
+  BareKey
+  | BasicStringKey { shortBasicString }
+  | LiteralStringKey { shortLiteralString }
+}
+
+value {
+  DecimalInteger
+  | HexadecimalInteger
+  | OctalInteger
+  | BinaryInteger
+  | DecimalFloat
+  | Infinity
+  | NaN
+  | ShortBasicString { shortBasicString }
+  | ShortLiteralString { shortLiteralString }
+  | LongBasicString { longBasicString }
+  | LongLiteralString { longLiteralString }
+  | True { 'true' }
+  | False { 'false' }
+  | OffsetDateTime
+  | LocalDateTime
+  | LocalDate
+  | LocalTime
+  | Array { '[' eol* ( value eol* (',' eol* value eol*)* )? ']' }
+  | InlineTable { '{' (Pair (',' Pair)*)? '}' }
+}
+
+Table {
+  line<TableHeader { '[' key ']' }>
+  line<Pair>*
+}
+
+ArrayTable {
+  line<ArrayTableHeader { '[[' key ']]' }>
+  line<Pair>*
+}
+
+@skip {
+  lineSpace | Comment
+}
+
+@tokens {
+  lineSpace { $[ \t]+ }
+  BareKey { $[a-zA-Z_\-0-9]+ }
+  num<T> { ('+' | '-')? T }
+  DecimalInteger {
+    num<'0' | $[1-9] ('_'? $[0-9])*>
+  }
+  HexadecimalInteger {
+    num<'0' $[xX] $[0-9a-fA-F]+ ('_' $[0-9a-fA-F]+)*>
+  }
+  OctalInteger {
+    num<'0' $[oO] $[0-7]+ ('_' $[0-7]+)*>
+  }
+  BinaryInteger {
+    num<'0' $[bB] $[01]+ ('_' $[01]+)*>
+  }
+  DecimalFloat {
+    num<
+      ( '0' | $[1-9] ('_'? $[0-9])* )
+      ( fractionPart exponentPart? | exponentPart )
+    >
+  }
+  Infinity {
+    num<'inf'>
+  }
+  NaN {
+    num<'nan'>
+  }
+  fractionPart {
+    '.' $[0-9]+ ('_' $[0-9]+)*
+  }
+  exponentPart {
+    $[eE] $[\+\-]? $[0-9]+ ('_' $[0-9]+)*
+  }
+  Comment { '#' ![\r\n]* }
+  eol { '\r'? '\n' }
+  eof { @eof }
+  shortBasicString {
+    '"' (!["\\]+ | '\\' _)* '"'
+  }
+  shortLiteralString {
+    "'" ![']* "'"
+  }
+  longBasicString {
+    '"""' (('"' '"'?)? (!["\\]+ | '\\' _))* ('"' '"'?)? '"""'
+  }
+  longLiteralString {
+    "'''" (("'" "'"?)? ![']+ )* ("'" "'"?)? "'''"
+  }
+  date {
+    $[0-9] $[0-9] $[0-9] $[0-9] '-' $[0-9] $[0-9] '-' $[0-9] $[0-9]
+  }
+  time {
+    $[0-9] $[0-9] ':' $[0-9] $[0-9] ':' $[0-9] $[0-9]
+    ('.' $[0-9]+)?
+  }
+  timezone {
+    'Z' | $[\+\-] $[0-9] $[0-9] ':' $[0-9] $[0-9]
+  }
+  OffsetDateTime {
+    date $[T ] time timezone
+  }
+  LocalDateTime {
+    date $[T ] time
+  }
+  LocalDate {
+    date
+  }
+  LocalTime {
+    time
+  }
+  @precedence {
+    OffsetDateTime LocalDateTime LocalDate LocalTime
+    DecimalFloat HexadecimalInteger OctalInteger BinaryInteger DecimalInteger
+  }
+}
+
+@external propSource tomlHighlighting from "./highlight"
