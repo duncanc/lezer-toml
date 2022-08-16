@@ -118,13 +118,13 @@ ArrayTable {
     ('.' $[0-9]+)?
   }
   timezone {
-    'Z' | $[\+\-] $[0-9] $[0-9] ':' $[0-9] $[0-9]
+    $[Zz] | $[\+\-] $[0-9] $[0-9] ':' $[0-9] $[0-9]
   }
   OffsetDateTime {
-    date $[T ] time timezone
+    date $[Tt ] time timezone
   }
   LocalDateTime {
-    date $[T ] time
+    date $[Tt ] time
   }
   LocalDate {
     date
