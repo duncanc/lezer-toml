@@ -43,7 +43,7 @@ value {
   | LocalDateTime
   | LocalDate
   | LocalTime
-  | Array { '[' eol* ( value eol* (',' eol* value eol*)* )? ']' }
+  | Array { '[' eol* ( value eol* (',' eol* value eol*)* (',' eol*)? )? ']' }
   | InlineTable { '{' (Pair (',' Pair)*)? '}' }
 }
 
